@@ -8,10 +8,15 @@ openssl req -nodes -x509 -newkey rsa:1024 -keyout gohttp2.key -out gohttp2.cert 
 
 ### Running
 ```
-go run github.com/tkstorm/go-http2
+// clone
+git clone https://github.com/tkstorm/go-http2
+// generate cert
+openssl req -nodes -x509 -newkey rsa:1024 -keyout gohttp2.key -out gohttp2.cert -days 3650 -subj "/C=CN"
+// run web server
+go run *.go
 ```
 
-Set push content:
+### Set push content
 
 ```
 // set http2 push
