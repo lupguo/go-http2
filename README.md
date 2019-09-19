@@ -1,3 +1,5 @@
+## Test Go HTTP/2 Server Push
+
 ### Cert Generate
 ```
 openssl req -nodes -x509 -newkey rsa:1024 -keyout gohttp2.key -out gohttp2.cert -days 3650 \ 
@@ -7,6 +9,19 @@ openssl req -nodes -x509 -newkey rsa:1024 -keyout gohttp2.key -out gohttp2.cert 
 ### Running
 ```
 go run github.com/tkstorm/go-http2
+```
+
+Set push content:
+
+```
+// set http2 push
+func h2push(w http.ResponseWriter, s ...string) {
+	if p, ok := w.(http.Pusher); ok {
+		for _, t := range s {
+			p.Push(t, nil)
+		}
+	}
+}
 ```
 
 ### Result
@@ -118,3 +133,7 @@ The negotiated protocol: h2
 [  0.031] send GOAWAY frame <length=8, flags=0x00, stream_id=0>
           (last_stream_id=4, error_code=NO_ERROR(0x00), opaque_data(0)=[])
 ```
+
+### HTTP/2 Protocol
+
+https://tkstorm.com/posts-list/programming/http/http2-review/
